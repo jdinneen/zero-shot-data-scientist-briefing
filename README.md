@@ -1,6 +1,6 @@
 # Zero-Shot Data Scientist Video Page
 
-Standalone GitHub Pages package for the data-scientist version of the zero-shot coastal bacteria ranker video.
+Standalone GitHub Pages package for the data-scientist version of the zero-shot coastal bacteria ranker video, including the physical-intuition feature-layer explainer.
 
 This repository is intentionally separate from the broader project site.
 
