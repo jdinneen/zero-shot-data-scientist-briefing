@@ -1,0 +1,186 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.914
+This is the data scientist version of the zero-shot coastal bacteria result.
+
+00:00:05.914 --> 00:00:12.321
+It walks through the panel contract, PI feature engine, model protocol, nulls, gates
+
+00:00:12.321 --> 00:00:13.800
+washouts, and limitations.
+
+00:00:13.800 --> 00:00:23.594
+The research question was narrow: can a label-free model train on non-target basins and rank enterococcus exceedance in a completely held-out basin
+
+00:00:23.594 --> 00:00:27.600
+with zero target-domain labels or lab-history features as inputs?
+
+00:00:27.600 --> 00:00:36.341
+The final scored panel had twelve domains, 708,337 held-out rows, and 57,628 events.
+
+00:00:36.341 --> 00:00:44.410
+Rows needed a date, site, basin, coordinates, a comparable daily bacteria label
+
+00:00:44.410 --> 00:00:47.100
+and finite PI features.
+
+00:00:47.100 --> 00:00:51.848
+Data quality was enforced by exclusion, not wishful imputation.
+
+00:00:51.848 --> 00:00:56.597
+Empty Wales, annual-only EEA bathing class data, pre-2012 Montenegro
+
+00:00:56.597 --> 00:01:02.400
+and Hong Kong without coordinates were excluded from daily PI transfer.
+
+00:01:02.400 --> 00:01:07.470
+The anti-leak feature contract allowed weather, PI groups, calendar
+
+00:01:07.470 --> 00:01:11.977
+optional geography, and optional strings for non-headline arms.
+
+00:01:11.977 --> 00:01:17.610
+It blocked FIB concentration, hazard labels, exceedance labels, lab-history lags
+
+00:01:17.610 --> 00:01:19.300
+and target-domain labels.
+
+00:01:19.300 --> 00:01:25.848
+The headline feature set was five PI groups: Damkohler-style decay, loading, UV dose
+
+00:01:25.848 --> 00:01:27.863
+Peclet-style transport, and flushing.
+
+00:01:27.863 --> 00:01:32.900
+These are shared physical coordinates rather than basin identity features.
+
+00:01:32.900 --> 00:01:40.476
+We also engineered compact label-free physics kernels from the same inputs: decay-adjusted load
+
+00:01:40.476 --> 00:01:45.721
+solar survival load, runoff memory, first flush, flushing inverse
+
+00:01:45.721 --> 00:01:49.800
+spring-neap exchange, transport retention, and wind resuspension.
+
+00:01:49.800 --> 00:01:55.457
+The model zoo compared calendar, PI, PI plus calendar, raw physics
+
+00:01:55.457 --> 00:02:00.086
+physics plus geography, physics-kernel variants, and sampled CARTE strings.
+
+00:02:00.086 --> 00:02:04.200
+The frozen public winner was PI plus logistic.
+
+00:02:04.200 --> 00:02:06.441
+The validation split was leave-one-basin-out.
+
+00:02:06.441 --> 00:02:12.269
+For each target, the model trained only on rows from the other basins
+
+00:02:12.269 --> 00:02:14.510
+then scored the hidden basin.
+
+00:02:14.510 --> 00:02:17.200
+This repeated across all twelve domains.
+
+00:02:17.200 --> 00:02:19.581
+The primary metric was average precision
+
+00:02:19.581 --> 00:02:23.152
+because the use case is ranking early sampling attention.
+
+00:02:23.152 --> 00:02:29.500
+The base-rate baseline is the held-out event rate; lift is AP divided by that base rate.
+
+00:02:29.500 --> 00:02:31.955
+The null check was source-stratum permutation.
+
+00:02:31.955 --> 00:02:35.636
+Outcomes were shuffled within source buckets, preserving source mix
+
+00:02:35.636 --> 00:02:40.545
+and the real AP had to beat the ninety-fifth percentile shuffled score.
+
+00:02:40.545 --> 00:02:43.000
+It did on all twelve targets.
+
+00:02:43.000 --> 00:02:46.722
+The freeze gate required every target above base rate
+
+00:02:46.722 --> 00:02:50.030
+at least eighty percent above the permutation null
+
+00:02:50.030 --> 00:02:53.338
+at least one hundred null draws per target
+
+00:02:53.338 --> 00:02:58.300
+AP-minus-base bootstrap lower bound above zero, and mean-lift lower bound above one.
+
+00:02:58.300 --> 00:03:09.244
+The headline PI plus logistic result was mean AP 0.1511 versus mean base rate 0.0909
+
+00:03:09.244 --> 00:03:12.163
+for mean lift 1.752.
+
+00:03:12.163 --> 00:03:18.000
+The domain-bootstrap AP-minus-base interval was 0.0365 to 0.086.
+
+00:03:18.000 --> 00:03:21.403
+Per-target results were not one lucky basin.
+
+00:03:21.403 --> 00:03:25.778
+All twelve held-out domains beat their own base rate.
+
+00:03:25.778 --> 00:03:30.639
+The strongest lifts were Australia New South Wales, California, Ireland
+
+00:03:30.639 --> 00:03:35.500
+and Texas; the weakest lift was North Carolina at 1.186.
+
+00:03:35.500 --> 00:03:39.618
+The richer physics-kernel arms looked tempting on mean AP
+
+00:03:39.618 --> 00:03:42.821
+but they washed under the promotion rule.
+
+00:03:42.821 --> 00:03:46.024
+The best kernel added 0.0083 mean AP
+
+00:03:46.024 --> 00:03:50.600
+but its paired-domain interval crossed zero and five targets regressed.
+
+00:03:50.600 --> 00:03:53.607
+CARTE and entity-string variants were not frozen.
+
+00:03:53.607 --> 00:03:58.333
+Prior same-sample fair-baseline checks failed, and full-panel CARTE was too slow
+
+00:03:58.333 --> 00:04:02.200
+so strings did not become part of the claim.
+
+00:04:02.200 --> 00:04:03.690
+The limitations matter.
+
+00:04:03.690 --> 00:04:07.167
+This is a retrospective zero-shot ranking screen
+
+00:04:07.167 --> 00:04:09.650
+not a calibrated advisory probability.
+
+00:04:09.650 --> 00:04:17.100
+Persistence and seasonal-naive were not run because target-domain history is forbidden in the cold-start setting.
+
+00:04:17.100 --> 00:04:21.378
+The reproducibility artifacts are the runner, markdown and JSON outputs
+
+00:04:21.378 --> 00:04:23.517
+freeze manifest, and test file.
+
+00:04:23.517 --> 00:04:32.500
+The caveat is that byte-reproduction from a clean clone is not yet proven because cached panels are not public frozen inputs.
+
+00:04:32.500 --> 00:04:45.000
+The defensible data-science claim is narrow: a simple PI plus logistic ranker clears a hardened zero-shot screen for prioritizing early sampling in unseen coastal bacteria basins.
+
